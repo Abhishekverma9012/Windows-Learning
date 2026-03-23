@@ -61,8 +61,8 @@ const BrowseMentors = () => {
             </button>
           </div>
 
-          <div className="flex gap-8">
-            <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-56 shrink-0 space-y-6`}>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+            <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-52 shrink-0 space-y-6`}>
               <div>
                 <h4 className="text-sm font-semibold mb-3">Category</h4>
                 <div className="space-y-2">
