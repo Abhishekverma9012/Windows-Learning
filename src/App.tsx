@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Public pages
 import Index from "./pages/Index";
@@ -35,6 +36,7 @@ import LearnerDashboard from "./pages/LearnerDashboard";
 import LearnerSessions from "./pages/LearnerSessions";
 import LearnerProgress from "./pages/LearnerProgress";
 import LearnerWallet from "./pages/LearnerWallet";
+import LearnerProfileEdit from "./pages/LearnerProfileEdit";
 import PostRequirement from "./pages/PostRequirement";
 
 // Mentor pages
@@ -65,64 +67,67 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          {/* Public */}
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/press" element={<Press />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/safety" element={<Safety />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/how-it-works" element={<HowItWorksPage />} />
-          <Route path="/pricing" element={<Pricing />} />
+        <AuthProvider>
+          <Routes>
+            {/* Public */}
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/safety" element={<Safety />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/how-it-works" element={<HowItWorksPage />} />
+            <Route path="/pricing" element={<Pricing />} />
 
-          {/* Auth */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/register" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/verify-email" element={<EmailVerification />} />
+            {/* Auth */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/register" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/verify-email" element={<EmailVerification />} />
 
-          {/* Onboarding */}
-          <Route path="/onboarding/learner" element={<LearnerOnboarding />} />
-          <Route path="/onboarding/mentor" element={<MentorOnboarding />} />
-          <Route path="/mentor/verification-pending" element={<MentorVerificationPending />} />
+            {/* Onboarding */}
+            <Route path="/onboarding/learner" element={<LearnerOnboarding />} />
+            <Route path="/onboarding/mentor" element={<MentorOnboarding />} />
+            <Route path="/mentor/verification-pending" element={<MentorVerificationPending />} />
 
-          {/* Learner */}
-          <Route path="/dashboard" element={<LearnerDashboard />} />
-          <Route path="/dashboard/learner" element={<LearnerDashboard />} />
-          <Route path="/learner/sessions" element={<LearnerSessions />} />
-          <Route path="/learner/progress" element={<LearnerProgress />} />
-          <Route path="/learner/wallet" element={<LearnerWallet />} />
-          <Route path="/requirements/post" element={<PostRequirement />} />
+            {/* Learner */}
+            <Route path="/dashboard" element={<LearnerDashboard />} />
+            <Route path="/dashboard/learner" element={<LearnerDashboard />} />
+            <Route path="/learner/sessions" element={<LearnerSessions />} />
+            <Route path="/learner/progress" element={<LearnerProgress />} />
+            <Route path="/learner/wallet" element={<LearnerWallet />} />
+            <Route path="/learner/profile/edit" element={<LearnerProfileEdit />} />
+            <Route path="/requirements/post" element={<PostRequirement />} />
 
-          {/* Mentor */}
-          <Route path="/mentor/dashboard" element={<MentorDashboard />} />
-          <Route path="/dashboard/mentor" element={<MentorDashboard />} />
-          <Route path="/mentor/requests" element={<MentorRequests />} />
-          <Route path="/mentor/requests/:id" element={<MentorRequests />} />
-          <Route path="/mentor/proposals" element={<MentorProposals />} />
-          <Route path="/mentor/sessions" element={<MentorSessions />} />
-          <Route path="/mentor/earnings" element={<MentorEarnings />} />
-          <Route path="/mentor/availability" element={<MentorAvailability />} />
-          <Route path="/mentor/profile/edit" element={<MentorProfileEdit />} />
-          <Route path="/mentor/:id" element={<MentorProfile />} />
+            {/* Mentor */}
+            <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+            <Route path="/dashboard/mentor" element={<MentorDashboard />} />
+            <Route path="/mentor/requests" element={<MentorRequests />} />
+            <Route path="/mentor/requests/:id" element={<MentorRequests />} />
+            <Route path="/mentor/proposals" element={<MentorProposals />} />
+            <Route path="/mentor/sessions" element={<MentorSessions />} />
+            <Route path="/mentor/earnings" element={<MentorEarnings />} />
+            <Route path="/mentor/availability" element={<MentorAvailability />} />
+            <Route path="/mentor/profile/edit" element={<MentorProfileEdit />} />
+            <Route path="/mentor/:id" element={<MentorProfile />} />
 
-          {/* Discovery */}
-          <Route path="/mentors" element={<BrowseMentors />} />
+            {/* Discovery */}
+            <Route path="/mentors" element={<BrowseMentors />} />
 
-          {/* Support & Settings */}
-          <Route path="/help" element={<HelpCenter />} />
-          <Route path="/support/ticket" element={<SupportTicket />} />
-          <Route path="/settings" element={<SettingsPage />} />
+            {/* Support & Settings */}
+            <Route path="/help" element={<HelpCenter />} />
+            <Route path="/support/ticket" element={<SupportTicket />} />
+            <Route path="/settings" element={<SettingsPage />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

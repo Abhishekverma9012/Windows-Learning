@@ -2,10 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
-type TableName = 'profiles' | 'mentor_profiles' | 'learner_profiles' | 'sessions' | 'reviews' | 'wallet_transactions' | 'requirements' | 'proposals' | 'notifications' | 'categories';
-
 interface UseRealtimeQueryOptions {
-  table: TableName;
+  table: string;
   filter?: { column: string; value: string };
   select?: string;
   orderBy?: { column: string; ascending?: boolean };
@@ -20,7 +18,7 @@ export function useRealtimeQuery<T = any>({ table, filter, select = '*', orderBy
   const fetchData = useCallback(async () => {
     if (!enabled) return;
     setLoading(true);
-    let query = supabase.from(table).select(select);
+    let query = supabase.from(table as any).select(select);
     if (filter) query = query.eq(filter.column, filter.value);
     if (orderBy) query = query.order(orderBy.column, { ascending: orderBy.ascending ?? false });
 
@@ -38,7 +36,6 @@ export function useRealtimeQuery<T = any>({ table, filter, select = '*', orderBy
     fetchData();
   }, [fetchData]);
 
-  // Real-time subscription
   useEffect(() => {
     if (!enabled) return;
 
@@ -54,7 +51,6 @@ export function useRealtimeQuery<T = any>({ table, filter, select = '*', orderBy
         table,
         ...(channelFilter ? { filter: channelFilter } : {}),
       }, () => {
-        // Re-fetch on any change
         fetchData();
       })
       .subscribe();
@@ -74,7 +70,7 @@ export function useRealtimeSingle<T = any>({ table, filter, select = '*', enable
     if (!enabled || !filter) return;
     setLoading(true);
     const { data: result, error: err } = await supabase
-      .from(table)
+      .from(table as any)
       .select(select)
       .eq(filter.column, filter.value)
       .maybeSingle();
